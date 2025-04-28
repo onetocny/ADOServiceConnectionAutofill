@@ -29,19 +29,11 @@ function onDocumentMutation()
         return; // edit/create Service Connection dialog is not open
     }
 
-    // todo find service reference input and fill in the value if it is not filled already
-    log("here");
     const label = Array.from(document.querySelectorAll('label')).find(lbl => lbl.textContent.trim() === 'Service Management Reference (optional)');
     const serviceReferenceInput = label ? label.nextElementSibling.querySelector('input') : null;
-
-    log('Label found: ' + label);
-    if (!label)
-    {
-        log("Missing label element.")
-        return;
+    if (serviceReferenceInput && !serviceReferenceInput.value) {
+        serviceReferenceInput.value = '426d0e47-2bce-484a-a1e2-2d307b51f8e2';
     }
-    
-    log('Service reference input found: ' + serviceReferenceInput);
 
     mo.disconnect();
     observe();
