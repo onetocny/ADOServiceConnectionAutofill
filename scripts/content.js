@@ -1,4 +1,6 @@
-const scPageRegex = /^https:\/\/dev\.azure\.com\/+$/i; // todo specify the sc url here
+const scPageRegexNewFormat = /^https:\/\/dev\.azure\.com\/\w+\/\w+\/_settings\/adminservices$/i;
+const scPageRegexOldFormat = /^https:\/\/\w+\.visualstudio\.com\/\w+\/_settings\/adminservices$/i;
+
 const observerOptions = {
     subtree: true,
     childList: true,
@@ -15,13 +17,10 @@ function observe()
 }
 
 function onDocumentMutation()
-{
-    log("Hello from extension");
-
-
-    if (!scPageRegex.test(window.location.href))
+{    
+    const href = window.location.href;
+    if (!scPageRegexNewFormat.test(href) && !scPageRegexOldFormat.test(href))
     {
-
         return; //we are not at SC page
     }
 

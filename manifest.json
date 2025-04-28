@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "ADO service connection autofill",
+    "name": "ADO Service Connection Autofill",
     "version": "0.0",
     "description": "todo",
     "content_scripts": [
