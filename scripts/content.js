@@ -16,10 +16,14 @@ function observe()
 
 function onDocumentMutation()
 {    
+    log("Hello from extension");
+
     if (!scPageRegex.test(window.location.href))
     {
         return; //we are not at SC page
     }
+
+    
 
     // todo check if the ARM endpoint dialog is open
 

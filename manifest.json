@@ -1,13 +1,14 @@
 {
     "manifest_version": 3,
     "name": "ADO service connection autofill",
-    "version": "1.3",
+    "version": "0.0",
     "description": "todo",
     "content_scripts": [
       {
         "js": ["scripts/content.js"],
         "matches": [
-          "https://dev.azure.com/*"
+          "https://dev.azure.com/*/*/_settings/adminservices",
+          "https://*.visualstudio.com/*/_settings/adminservices"
         ],
         "run_at": "document_idle"
       }
