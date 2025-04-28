@@ -21,7 +21,6 @@ function onDocumentMutation()
     const href = window.location.href;
     if (!scPageRegexNewFormat.test(href) && !scPageRegexOldFormat.test(href))
     {
-
         return; //we are not at SC page
     }
 
