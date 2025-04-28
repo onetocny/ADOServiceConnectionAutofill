@@ -30,12 +30,9 @@ function onDocumentMutation()
         return; // edit/create Service Connection dialog is not open
     }
 
-    // for now just log the value of the setting stored in the storage
-    chrome.storage.sync.get('settingValue', function(data) {
-        if (data.settingValue) {
-            console.log('Stored setting value:', data.settingValue);
-        }
-    });
+    // 
+    printJsonSettingsToConsole();
+
 
     // todo find service reference input and fill in the value if it is not filled already
 
