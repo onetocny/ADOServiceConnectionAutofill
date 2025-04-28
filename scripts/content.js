@@ -15,20 +15,23 @@ function observe()
 }
 
 function onDocumentMutation()
-{    
+{
     log("Hello from extension");
+
 
     if (!scPageRegex.test(window.location.href))
     {
+
         return; //we are not at SC page
     }
 
-    
-
-    // todo check if the ARM endpoint dialog is open
+    if(!document.querySelector('.endpoints-editor-panel-heading'))
+    {
+        return; // edit/create Service Connection dialog is not open
+    }
 
     // todo find service reference input and fill in the value if it is not filled already
-    
+
     mo.disconnect();
     observe();
 }
