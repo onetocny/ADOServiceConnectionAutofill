@@ -3,6 +3,8 @@ const observerOptions = {
     subtree: true,
     childList: true,
 };
+
+// todo check if this is the right and up to date way of how to bind to page events
 const mo = new MutationObserver(onDocumentMutation);
 
 observe();
@@ -16,15 +18,14 @@ function onDocumentMutation()
 {    
     if (!scPageRegex.test(window.location.href))
     {
-        return; //we are not at PR detail page
+        return; //we are not at SC page
     }
 
+    // todo check if the ARM endpoint dialog is open
 
+    // todo find service reference input and fill in the value if it is not filled already
     
     mo.disconnect();
-    
-
-
     observe();
 }
 
