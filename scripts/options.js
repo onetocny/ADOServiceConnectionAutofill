@@ -1,9 +1,13 @@
 const jsonInput = document.getElementById('jsonInput');
+const stringInput = document.getElementById('stringInput');
 const saveButton = document.getElementById('saveButton');
+const saveButtonExcludedOrgs = document.getElementById('saveButtonExcludedOrgs');
 const formatButton = document.getElementById('formatButton');
 const successMessage = document.getElementById('successMessage');
 const copyExampleButton = document.getElementById('copyExampleButton');
+const copyExampleStringButton = document.getElementById('copyExampleStringButton');
 const exampleJson = document.getElementById('exampleJson');
+const exampleString = document.getElementById('exampleString');
 
 // Enable save button when input is changed
 jsonInput.addEventListener('input', function() {
@@ -22,6 +26,25 @@ saveButton.addEventListener('click', function() {
         });
     } catch (e) {
         console.error('Invalid JSON:', e);
+    }
+});
+
+// Enable saveButtonExcludedOrgs button when input is changed
+stringInput.addEventListener('input', function() {
+    saveButtonExcludedOrgs.disabled = false;
+});
+
+// Save string and show success message
+saveButtonExcludedOrgs.addEventListener('click', function() {
+    const orgList = document.getElementById('stringInput').value;
+    try {
+        const orgArray = orgList.split(',').map(org => org.trim());
+        chrome.storage.sync.set({ excludedOrgs: orgArray }, function() {
+            saveButtonExcludedOrgs.disabled = true;
+            showSuccessMessage();
+        });
+    } catch (e) {
+        console.error('Error processing organization list:', e);
     }
 });
 
@@ -52,11 +75,25 @@ copyExampleButton.addEventListener('click', function() {
     });
 });
 
+// Copy example comma-separated list to clipboard
+copyExampleStringButton.addEventListener('click', function() {
+    navigator.clipboard.writeText(exampleString.textContent).then(() => {
+        console.log('Example comma-separated list copied to clipboard');
+    }).catch(err => {
+        console.error('Failed to copy example comma-separated list:', err);
+    });
+});
+
 // Load the saved JSON when the options page is opened
 window.onload = function() {
     chrome.storage.sync.get('jsonData', function(data) {
         if (data.jsonData) {
             jsonInput.value = data.jsonData;
+        }
+    });
+    chrome.storage.sync.get('excludedOrgs', function(data) {
+        if (data.excludedOrgs) {
+            document.getElementById('stringInput').value = data.excludedOrgs.join(', ');
         }
     });
 };
