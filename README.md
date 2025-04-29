@@ -52,7 +52,7 @@ A Chrome extension to automatically fill Azure DevOps service connection details
 ### Example Excluded Organizations
 
 ```
-org1, org2, org3
+mseng, msdata, msazure
 ```
 
 ## Development Notes
