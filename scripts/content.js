@@ -41,8 +41,12 @@ function onDocumentMutation()
                     console.log("key: " + key + ", value: " + value);
                     const label = Array.from(document.querySelectorAll('label')).find(lbl => lbl.textContent.trim() === key);
                     const inputField = label ? label.nextElementSibling.querySelector('input') : null;
-                    if (inputField && !!value && !inputField.value) {
+
+                    const initAttributeName = "adoSCAutofillIntialized";
+
+                    if (inputField && !!value && !inputField.value && !inputField.getAttribute(initAttributeName)) {
                         inputField.value = value;
+                        inputField.setAttribute(initAttributeName, true);
                         inputField.dispatchEvent(new Event("change", { bubbles: true }));
                     }
                 }
