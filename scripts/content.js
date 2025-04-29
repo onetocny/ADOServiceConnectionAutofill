@@ -33,7 +33,7 @@ function onDocumentMutation()
     }
 
     
-    const serviceReferenceInputValue = chrome.storage.sync.get('jsonData', function(data) {
+    chrome.storage.sync.get('jsonData', function(data) {
         if (data.jsonData) {
             try {
                 const jsonObject = JSON.parse(data.jsonData);
@@ -41,8 +41,9 @@ function onDocumentMutation()
                     console.log("key: " + key + ", value: " + value);
                     const label = Array.from(document.querySelectorAll('label')).find(lbl => lbl.textContent.trim() === key);
                     const inputField = label ? label.nextElementSibling.querySelector('input') : null;
-                    if(inputField && !!value) {
+                    if (inputField && !!value && !inputField.value) {
                         inputField.value = value;
+                        inputField.dispatchEvent(new Event("change", { bubbles: true }));
                     }
                 }
             } catch (e) {
