@@ -1,21 +1,137 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Extension Settings</title>
     <style>
+        body {
+            background-color: #e0f7fa;
+            /* Nice blue background */
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            /* Increased width to 80% */
+            text-align: center;
+        }
+
         textarea {
-            width: 100%;
+            width: 70%;
             height: 200px;
-            font-family: monospace;
+            font-family: 'Courier New', Courier, monospace;
+            /* Monospace font for code */
+            margin-bottom: 10px;
+            margin-right: 10px;
+            /* Adjusted right margin to match left margin */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            color: black;
+            white-space: pre;
+            overflow-wrap: normal;
+        }
+
+        button {
+            background-color: gray;
+            /* Default button color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #saveButton {
+            background-color: blue;
+            /* Save button color changed to blue */
+            /* float: left; */
+            /* Make the whole button clickable */
+            text-align: center;
+        }
+
+        #saveButton:disabled {
+            background-color: gray;
+            /* Change color to gray when disabled */
+            cursor: not-allowed;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            /* Left align the label */
+            font-size: 18px;
+            /* Improved font size */
+            margin-bottom: 5px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .success-message.visible {
+            opacity: 1;
+        }
+
+        .example-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .example-container pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
         }
     </style>
 </head>
-<body>
-    <h1>Settings</h1>
-    <label for="jsonInput">Enter settings JSON:</label>
-    <textarea id="jsonInput"></textarea>
-    <button id="saveButton">Save</button>
 
-    <script src="scripts/options.js"></script>
+<body>
+    <div class="container">
+        <h1>Settings</h1>
+        <label for="jsonInput">Enter JSON formatted (label name, default value) pairs:</label>
+        <textarea id="jsonInput"></textarea>
+        <div></div>
+        <button id="formatButton">Format JSON</button>
+        <button id="saveButton" disabled>Save</button>
+        <div id="successMessage" class="success-message">Successfully saved!</div>
+
+        <div class="example-container">
+            <label>Example JSON:</label>
+            <pre id="exampleJson">
+            {
+                "Service Management Reference (optional)": "426d0e47-2bce-484a-a1e2-2d307b51f8e2",
+                "Service Connection Name": "Service connection name 23"
+            }
+        </pre>
+            <button id="copyExampleButton">Copy to Clipboard</button>
+        </div>
+
+        <script src="scripts/options.js"></script>
+    </div>
 </body>
+
 </html>
