@@ -73,6 +73,20 @@
             cursor: not-allowed;
         }
 
+        #saveButtonExcludedOrgs {
+            background-color: blue;
+            /* Save button color changed to blue */
+            /* float: left; */
+            /* Make the whole button clickable */
+            text-align: center;
+        }
+
+        #saveButtonExcludedOrgs:disabled {
+            background-color: gray;
+            /* Change color to gray when disabled */
+            cursor: not-allowed;
+        }
+
         label {
             display: block;
             text-align: left;
@@ -117,6 +131,11 @@
         <div></div>
         <button id="formatButton">Format JSON</button>
         <button id="saveButton" disabled>Save</button>
+
+        <label for="stringInput">Enter a comma-separated list of excluded organizations:</label>
+        <textarea id="stringInput"></textarea>
+        <div></div>
+        <button id="saveButtonExcludedOrgs" disabled>Save</button>
         <div id="successMessage" class="success-message">Successfully saved!</div>
 
         <div class="example-container">
@@ -128,6 +147,14 @@
             }
         </pre>
             <button id="copyExampleButton">Copy to Clipboard</button>
+        </div>
+
+        <div class="example-container">
+            <label>Example comma-separated list:</label>
+            <pre id="exampleString">
+            org1, org2, org3, org4, org5
+        </pre>
+            <button id="copyExampleStringButton">Copy to Clipboard</button>
         </div>
 
         <script src="scripts/options.js"></script>
