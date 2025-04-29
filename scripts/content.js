@@ -19,10 +19,11 @@ function observe()
     mo.observe(document, observerOptions);
 }
 
-function onDocumentMutation()
+async function onDocumentMutation()
 {    
     const href = window.location.href;
-    const excludeOrgs = [/*todo load from options*/].map(o => o.toLowerCase());
+
+    const excludeOrgs = await getExcludedOrgs();
     const urlMatches = scUrlFormats
         .map(u => u.exec(href))
         .filter(r => r !== null && r.length > 1 && excludeOrgs.every(o => o !== r[1].toLowerCase()));
@@ -67,4 +68,16 @@ function onDocumentMutation()
 function log(message)
 {
     console.log("[SCAutofillExt] " + message);
+}
+
+async function getExcludedOrgs()
+{
+    const data = await chrome.storage.sync.get("excludedOrgs");
+    if (!data || !data.excludedOrgs)
+    {
+        return [];
+    }
+
+    const excludedOrgs = data.excludedOrgs + "";
+    return excludedOrgs.split(",").map(o => o.trim().toLowerCase());
 }
