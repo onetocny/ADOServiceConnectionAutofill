@@ -1,7 +1,7 @@
 const scUrlFormats = [
-    /^https:\/\/dev\.azure\.com\/\w+\/\w+\/_settings\/adminservices$/i,
-    /^https:\/\/\w+\.visualstudio\.com\/\w+\/_settings\/adminservices$/i,
-    /^https:\/\/codedev\.ms\/\w+\/\w+\/_settings\/adminservices$/i
+    /^https:\/\/dev\.azure\.com\/(\w+)\/\w+\/_settings\/adminservices$/i,
+    /^https:\/\/(\w+)\.visualstudio\.com\/\w+\/_settings\/adminservices$/i,
+    /^https:\/\/codedev\.ms\/(\w+)\/\w+\/_settings\/adminservices$/i
 ];
 
 const observerOptions = {
@@ -22,16 +22,20 @@ function observe()
 function onDocumentMutation()
 {    
     const href = window.location.href;
-    if (!scUrlFormats.some(u => u.test(href)))
+    const excludeOrgs = [/*todo load from options*/].map(o => o.toLowerCase());
+    const urlMatches = scUrlFormats
+        .map(u => u.exec(href))
+        .filter(r => r !== null && r.length > 1 && excludeOrgs.every(o => o !== r[1].toLowerCase()));
+
+    if (urlMatches.length === 0)
     {
-        return; //we are not at SC page
+        return; //we are not at SC page or the org is excluded
     }
 
     if (!document.querySelector('.endpoints-editor-panel-heading'))
     {
         return; // edit Service Connection dialog is not open
     }
-
     
     chrome.storage.sync.get('jsonData', function(data) {
         if (data.jsonData) {
