@@ -1,5 +1,8 @@
-const scPageRegexNewFormat = /^https:\/\/dev\.azure\.com\/\w+\/\w+\/_settings\/adminservices$/i;
-const scPageRegexOldFormat = /^https:\/\/\w+\.visualstudio\.com\/\w+\/_settings\/adminservices$/i;
+const scUrlFormats = [
+    /^https:\/\/dev\.azure\.com\/\w+\/\w+\/_settings\/adminservices$/i,
+    /^https:\/\/\w+\.visualstudio\.com\/\w+\/_settings\/adminservices$/i,
+    /^https:\/\/codedev\.ms\/\w+\/\w+\/_settings\/adminservices$/i
+];
 
 const observerOptions = {
     subtree: true,
@@ -19,12 +22,12 @@ function observe()
 function onDocumentMutation()
 {    
     const href = window.location.href;
-    if (!scPageRegexNewFormat.test(href) && !scPageRegexOldFormat.test(href))
+    if (!scUrlFormats.some(u => u.test(href)))
     {
         return; //we are not at SC page
     }
 
-    if(!document.querySelector('.endpoints-editor-panel-heading'))
+    if (!document.querySelector('.endpoints-editor-panel-heading'))
     {
         return; // edit/create Service Connection dialog is not open
     }

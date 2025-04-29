@@ -8,7 +8,8 @@
         "js": ["scripts/content.js"],
         "matches": [
           "https://dev.azure.com/*/*/_settings/adminservices",
-          "https://*.visualstudio.com/*/_settings/adminservices"
+          "https://*.visualstudio.com/*/_settings/adminservices",
+          "https://codedev.ms/*/*/_settings/adminservices"
         ],
         "run_at": "document_idle"
       }
