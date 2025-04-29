@@ -26,16 +26,27 @@ function onDocumentMutation()
 
     if(!document.querySelector('.endpoints-editor-panel-heading'))
     {
-        return; // edit/create Service Connection dialog is not open
+        return; // edit Service Connection dialog is not open
     }
 
-    printJsonSettingsToConsole();
-
-    const label = Array.from(document.querySelectorAll('label')).find(lbl => lbl.textContent.trim() === 'Service Management Reference (optional)');
-    const serviceReferenceInput = label ? label.nextElementSibling.querySelector('input') : null;
-    if (serviceReferenceInput && !serviceReferenceInput.value) {
-        serviceReferenceInput.value = '426d0e47-2bce-484a-a1e2-2d307b51f8e2';
-    }
+    
+    const serviceReferenceInputValue = chrome.storage.sync.get('jsonData', function(data) {
+        if (data.jsonData) {
+            try {
+                const jsonObject = JSON.parse(data.jsonData);
+                for (const [key, value] of Object.entries(jsonObject)) {
+                    console.log("key: " + key + ", value: " + value);
+                    const label = Array.from(document.querySelectorAll('label')).find(lbl => lbl.textContent.trim() === key);
+                    const inputField = label ? label.nextElementSibling.querySelector('input') : null;
+                    if(inputField && !!value) {
+                        inputField.value = value;
+                    }
+                }
+            } catch (e) {
+                return console.error('Error while assigning default values from extension:', e);
+            }
+        }
+    });
 
     mo.disconnect();
     observe();
