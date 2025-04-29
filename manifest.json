@@ -3,6 +3,8 @@
     "name": "ADO Service Connection Autofill",
     "version": "0.0",
     "description": "todo",
+    "options_page": "options.html",
+    "permissions": ["storage"],
     "content_scripts": [
       {
         "js": ["scripts/content.js"],
