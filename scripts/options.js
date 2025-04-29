@@ -39,7 +39,7 @@ saveButtonExcludedOrgs.addEventListener('click', function() {
     const orgList = document.getElementById('stringInput').value;
     try {
         const orgArray = orgList.split(',').map(org => org.trim());
-        chrome.storage.sync.set({ exludedOrgs: orgArray }, function() {
+        chrome.storage.sync.set({ excludedOrgs: orgArray }, function() {
             saveButtonExcludedOrgs.disabled = true;
             showSuccessMessage();
         });
@@ -91,9 +91,9 @@ window.onload = function() {
             jsonInput.value = data.jsonData;
         }
     });
-    chrome.storage.sync.get('exludedOrgs', function(data) {
-        if (data.exludedOrgs) {
-            document.getElementById('stringInput').value = data.exludedOrgs.join(', ');
+    chrome.storage.sync.get('excludedOrgs', function(data) {
+        if (data.excludedOrgs) {
+            document.getElementById('stringInput').value = data.excludedOrgs.join(', ');
         }
     });
 };
