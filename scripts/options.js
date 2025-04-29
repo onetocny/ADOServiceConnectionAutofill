@@ -1,7 +1,6 @@
 const jsonInput = document.getElementById('jsonInput');
 const stringInput = document.getElementById('stringInput');
 const saveButton = document.getElementById('saveButton');
-const saveButtonExcludedOrgs = document.getElementById('saveButtonExcludedOrgs');
 const formatButton = document.getElementById('formatButton');
 const successMessage = document.getElementById('successMessage');
 const copyExampleButton = document.getElementById('copyExampleButton');
@@ -14,37 +13,27 @@ jsonInput.addEventListener('input', function() {
     saveButton.disabled = false;
 });
 
-// Save JSON and show success message
+stringInput.addEventListener('input', function() {
+    saveButton.disabled = false;
+});
+
+// Save input and show success message
 saveButton.addEventListener('click', function() {
+    const orgList = document.getElementById('stringInput').value;
     const jsonString = jsonInput.value;
     try {
+        const orgArray = orgList.split(',').map(org => org.trim());
         const jsonObject = JSON.parse(jsonString);
-        chrome.storage.sync.set({ jsonData: jsonString }, function() {
-            console.log('JSON is saved:', jsonObject);
+
+        chrome.storage.sync.set({ 
+            excludedOrgs: orgArray, 
+            jsonData: jsonString 
+        }, function() {
             saveButton.disabled = true;
             showSuccessMessage();
         });
     } catch (e) {
-        console.error('Invalid JSON:', e);
-    }
-});
-
-// Enable saveButtonExcludedOrgs button when input is changed
-stringInput.addEventListener('input', function() {
-    saveButtonExcludedOrgs.disabled = false;
-});
-
-// Save string and show success message
-saveButtonExcludedOrgs.addEventListener('click', function() {
-    const orgList = document.getElementById('stringInput').value;
-    try {
-        const orgArray = orgList.split(',').map(org => org.trim());
-        chrome.storage.sync.set({ excludedOrgs: orgArray }, function() {
-            saveButtonExcludedOrgs.disabled = true;
-            showSuccessMessage();
-        });
-    } catch (e) {
-        console.error('Error processing organization list:', e);
+        console.error('Invalid input:', e);
     }
 });
 

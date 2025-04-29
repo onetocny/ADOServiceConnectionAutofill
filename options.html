@@ -11,7 +11,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             margin: 0;
         }
 
@@ -73,20 +72,6 @@
             cursor: not-allowed;
         }
 
-        #saveButtonExcludedOrgs {
-            background-color: blue;
-            /* Save button color changed to blue */
-            /* float: left; */
-            /* Make the whole button clickable */
-            text-align: center;
-        }
-
-        #saveButtonExcludedOrgs:disabled {
-            background-color: gray;
-            /* Change color to gray when disabled */
-            cursor: not-allowed;
-        }
-
         label {
             display: block;
             text-align: left;
@@ -110,15 +95,6 @@
 
         .example-container {
             margin-top: 20px;
-            text-align: left;
-        }
-
-        .example-container pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-family: 'Courier New', Courier, monospace;
         }
     </style>
 </head>
@@ -128,32 +104,33 @@
         <h1>Settings</h1>
         <label for="jsonInput">Enter JSON formatted (label name, default value) pairs:</label>
         <textarea id="jsonInput"></textarea>
-        <div></div>
+        <br>
         <button id="formatButton">Format JSON</button>
-        <button id="saveButton" disabled>Save</button>
 
         <label for="stringInput">Enter a comma-separated list of excluded organizations:</label>
         <textarea id="stringInput"></textarea>
-        <div></div>
-        <button id="saveButtonExcludedOrgs" disabled>Save</button>
+        <br>
+        <button id="saveButton" disabled>Save</button>
         <div id="successMessage" class="success-message">Successfully saved!</div>
 
         <div class="example-container">
             <label>Example JSON:</label>
-            <pre id="exampleJson">
+            <textarea id="jsonExample" readonly>
             {
                 "Service Management Reference (optional)": "426d0e47-2bce-484a-a1e2-2d307b51f8e2",
                 "Service Connection Name": "Service connection name 23"
             }
-        </pre>
+            </textarea>
+            <br>
             <button id="copyExampleButton">Copy to Clipboard</button>
         </div>
 
         <div class="example-container">
             <label>Example comma-separated list:</label>
-            <pre id="exampleString">
+            <textarea id="stringExample" readonly>
             org1, org2, org3, org4, org5
-        </pre>
+            </textarea>
+            <br>
             <button id="copyExampleStringButton">Copy to Clipboard</button>
         </div>
 
