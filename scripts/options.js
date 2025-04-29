@@ -11,12 +11,11 @@ document.getElementById('saveButton').addEventListener('click', function() {
 });
 
 // Load the saved JSON when the options page is opened
-window.onload = function() {
-    if (!data.jsonData) {
-        data.jsonData = '{"Service Management Reference (optional)": "426d0e47-2bce-484a-a1e2-2d307b51f8e2"}';
-    }
+window.onload = function() {    
     chrome.storage.sync.get('jsonData', function(data) {
-        if (data.jsonData) {
+        if (!data.jsonData) {
+            data.jsonData = JSON.parse('{"Service Management Reference (optional)": "426d0e47-2bce-484a-a1e2-2d307b51f8e2"}');
+        } else {
             document.getElementById('jsonInput').value = data.jsonData;
         }
     });
