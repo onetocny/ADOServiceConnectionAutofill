@@ -26,15 +26,20 @@ function onDocumentMutation(options, mo)
     {
         return;
     }
-
-    const excludeOrgs = getExcludedOrgs(options);
-    const urlMatches = scUrlFormats
+    
+    const urlMatch = scUrlFormats
         .map(u => u.exec(window.location.href))
-        .filter(r => r !== null && r.length > 1 && excludeOrgs.every(o => o !== r[1].toLowerCase()));
-
-    if (urlMatches.length === 0)
+        .find(u => u !== null && u.length > 1);
+    
+    if (!urlMatch)
     {
-        return; //we are not at SC page or the org is excluded
+        return; // we are not ADO SC page
+    }
+
+    const org = urlMatch[1].toLowerCase();
+    if (getExcludedOrgs(options).find(o => o === org))
+    {
+        return; // we are at org that is excluded
     }
 
     if (!document.querySelector('.endpoints-editor-panel-heading'))
