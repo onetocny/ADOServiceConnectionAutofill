@@ -47,28 +47,38 @@ function onDocumentMutation(options, mo)
         return; // edit Service Connection dialog is not open
     }
 
-    try {
+    autofillServiceConnectionDetails(options);
+
+    mo.disconnect();
+    observe(mo);
+}
+
+function autofillServiceConnectionDetails(options)
+{
+    try
+    {
         const jsonObject = JSON.parse(options.jsonData);
-        for (const [key, value] of Object.entries(jsonObject)) {
-            console.log("key: " + key + ", value: " + value);
+        for (const [key, value] of Object.entries(jsonObject))
+        {
             const label = Array.from(document.querySelectorAll('label')).find(lbl => lbl.textContent.trim() === key);
             const inputField = label ? label.nextElementSibling.querySelector('input') : null;
 
             const initAttributeName = "adoSCAutofillIntialized";
 
             if (inputField && !!value && !inputField.value && !inputField.getAttribute(initAttributeName)) {
-                inputField.value = value;
+                
                 inputField.setAttribute(initAttributeName, true);
-                inputField.dispatchEvent(new Event("change", { bubbles: true }));
+                setTimeout(() => {
+                    inputField.value = value;
+                    inputField.dispatchEvent(new Event("change", { bubbles: true }))
+                }, 100);
             }
         }
-    } catch (e) {
+    }
+    catch (e)
+    {
         return console.error('Error while assigning default values from extension:', e);
     }
-
-
-    mo.disconnect();
-    observe(mo);
 }
 
 function getExcludedOrgs(options)
