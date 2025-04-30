@@ -57,8 +57,7 @@ function showSuccessMessage() {
 
 // Copy example JSON to clipboard
 copyExampleButton.addEventListener('click', function() {
-    const jsonExample = document.getElementById('jsonExample');
-    navigator.clipboard.writeText(jsonExample.value.trim()).then(() => {
+    navigator.clipboard.writeText(exampleJson.value.trim()).then(() => {
         console.log('Example JSON copied to clipboard');
     }).catch(err => {
         console.error('Failed to copy example JSON:', err);
@@ -67,8 +66,7 @@ copyExampleButton.addEventListener('click', function() {
 
 // Copy example comma-separated list to clipboard
 copyExampleStringButton.addEventListener('click', function() {
-    const stringExample = document.getElementById('stringExample');
-    navigator.clipboard.writeText(stringExample.value.trim()).then(() => {
+    navigator.clipboard.writeText(exampleString.value.trim()).then(() => {
         console.log('Example comma-separated list copied to clipboard');
     }).catch(err => {
         console.error('Failed to copy example comma-separated list:', err);
