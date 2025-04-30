@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "ADO Service Connection Autofill",
-    "version": "0.0",
-    "description": "todo",
+    "version": "1.0",
+    "description": "A browser extension to autofill Azure DevOps service connection settings for improved efficiency.",
     "options_page": "options.html",
     "permissions": ["storage"],
     "content_scripts": [
