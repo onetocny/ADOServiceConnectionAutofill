@@ -33,18 +33,13 @@ function onDocumentMutation(options, mo)
     
     if (!urlMatch)
     {
-        return; // we are not ADO SC page
+        return; // we are not at ADO SC page
     }
 
     const org = urlMatch[1].toLowerCase();
     if (getExcludedOrgs(options).find(o => o === org))
     {
         return; // we are at org that is excluded
-    }
-
-    if (!document.querySelector('.endpoints-editor-panel-heading'))
-    {
-        return; // edit Service Connection dialog is not open
     }
 
     autofillServiceConnectionDetails(options);
@@ -55,15 +50,20 @@ function onDocumentMutation(options, mo)
 
 function autofillServiceConnectionDetails(options)
 {
+    const labels = Array.from(document.querySelectorAll(".endpoints-editor-panel-container label"));
+    if (labels.length < 1)
+    {
+        return; // there are no labels or panel is not open
+    }
+
     try
     {
-        const jsonObject = JSON.parse(options.jsonData);
-        for (const [key, value] of Object.entries(jsonObject))
+        const initAttributeName = "adoSCAutofillIntialized";
+        const autofillValues = JSON.parse(options.jsonData);
+        for (const [key, value] of Object.entries(autofillValues))
         {
-            const label = Array.from(document.querySelectorAll('label')).find(lbl => lbl.textContent.trim() === key);
-            const inputField = label ? label.nextElementSibling.querySelector('input') : null;
-
-            const initAttributeName = "adoSCAutofillIntialized";
+            const label = labels.find(lbl => lbl.textContent.trim() === key);
+            const inputField = label ? label.nextElementSibling.querySelector("input") : null;
 
             if (inputField && !!value && !inputField.value && !inputField.getAttribute(initAttributeName)) {
                 
@@ -77,7 +77,7 @@ function autofillServiceConnectionDetails(options)
     }
     catch (e)
     {
-        return console.error('Error while assigning default values from extension:', e);
+        return console.error("Error while assigning default values from extension:", e);
     }
 }
 
